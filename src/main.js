@@ -1,1 +1,1 @@
-import "https://cdn.jsdelivr.net/gh/casellas-maknikar/hashium/src/main.min.js"; //Hashium
+import "https://cdn.hashium.dev";
