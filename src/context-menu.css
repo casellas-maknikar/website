@@ -1,0 +1,193 @@
+/* Casellas-Maknikar context menu. Scoped to the injected #cm-menu-host. */
+/* Cinzel Decorative Regular: Copyright (c) 2012 Natanael Gama.
+   Licensed under the SIL Open Font License 1.1; see fonts/OFL.txt. */
+@font-face {
+  font-family: "CMMenuBrand";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/CinzelDecorative-Regular.ttf") format("truetype");
+}
+
+#cm-menu-host {
+  all: initial;
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  pointer-events: none;
+  font: 400 16px/1.5 Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+  text-align: left;
+  color-scheme: light;
+  --surface: #fff;
+  --ink: #24262b;
+  --muted: #686c75;
+  --line: #e9eaed;
+  --hover: #f1f2f4;
+  --focus: #3d65cb;
+  --shadow: 0 16px 48px rgb(21 24 33 / 12%), 0 3px 10px rgb(21 24 33 / 7%);
+}
+
+/* Reset only menu-owned HTML; leave SVG presentation attributes intact. */
+#cm-menu-host :where(div, p, span, h2, h3, pre, code, kbd, button, dialog) {
+  all: revert;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+}
+#cm-menu-host, #cm-menu-host * { box-sizing: border-box; user-select: none; }
+#cm-menu-host .tool-code, #cm-menu-host .tool-code * { user-select: text; }
+#cm-menu-host button { appearance: none; text-transform: none; letter-spacing: normal; }
+#cm-menu-host[hidden], #cm-menu-host [hidden] { display: none !important; }
+#cm-menu-host .menu {
+  position: fixed;
+  z-index: 10;
+  width: 20rem;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  user-select: none;
+  pointer-events: auto;
+  animation: cm-menu-appear 110ms ease-out;
+}
+#cm-menu-host .section-divider { display: flex; align-items: center; gap: 7px; width: 100%; min-height: 36px; margin: 2px 0; padding: 5px 8px; border: 0; border-radius: 6px; background: transparent; font: inherit; font-size: .75rem; line-height: 1.35; color: var(--muted); cursor: pointer; text-align: left; }
+#cm-menu-host .section-divider:hover { background: var(--hover); }
+#cm-menu-host .section-divider:focus-visible { outline: 3px solid var(--focus); outline-offset: -2px; }
+#cm-menu-host .section-name { font-weight: 600; white-space: nowrap; }
+#cm-menu-host .section-detail { min-width: 0; overflow-wrap: anywhere; text-align: right; font-variant-numeric: tabular-nums; }
+#cm-menu-host .section-rule { flex: 1; min-width: 8px; height: 1px; background: var(--line); }
+#cm-menu-host .section-divider .section-chevron { flex: 0 0 10px; width: 10px; height: 10px; transform: rotate(90deg); }
+#cm-menu-host .section-divider[aria-expanded="false"] .section-chevron { transform: none; }
+#cm-menu-host #cm-context-menu { scroll-padding-bottom: 52px; }
+#cm-menu-host .menu-footer { position: sticky; bottom: -6px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; padding: 7px 4px 2px; border-top: 1px solid var(--line); background: var(--surface); box-shadow: 0 -4px 0 var(--surface); }
+#cm-menu-host .menu-footer .footer-action { flex: 0 0 auto; width: auto; min-height: 38px; padding: 7px; gap: 8px; }
+#cm-menu-host .footer-brand { margin-left: auto; text-align: right; font: 400 .8125rem/1.5 "CMMenuBrand", Georgia, serif; color: var(--muted); white-space: nowrap; }
+#cm-menu-host .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+#cm-menu-host .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  font-size: .875rem;
+  line-height: 1.45;
+  cursor: pointer;
+  outline: none;
+}
+#cm-menu-host .menu-item:hover, #cm-menu-host .menu-item:focus { background: var(--hover); }
+#cm-menu-host .menu-item:focus-visible { outline: 3px solid var(--focus); outline-offset: -2px; }
+#cm-menu-host .menu-item:active { filter: brightness(.94); }
+#cm-menu-host .menu-item[aria-disabled="true"] { color: var(--muted); cursor: default; }
+#cm-menu-host .menu-item[aria-disabled="true"] .item-label { opacity: 1; }
+#cm-menu-host .item-label { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+#cm-menu-host .item-shortcut { flex: 0 0 auto; margin-left: auto; color: var(--muted); font-size: .75rem; line-height: 1.5; font-family: inherit; white-space: nowrap; }
+#cm-menu-host #cm-submenu-back:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+#cm-menu-host .menu-item svg { flex: 0 0 17px; width: 17px; height: 17px; color: var(--muted); }
+#cm-menu-host .menu-item .chevron { flex-basis: 12px; width: 12px; height: 12px; margin-left: auto; }
+#cm-menu-host #cm-about-submenu { z-index: 11; }
+#cm-menu-host .submenu-stacked { opacity: 0; pointer-events: none; }
+#cm-menu-host #cm-submenu-back { display: none; width: 100%; padding: 9px 10px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; font-size: .8rem; text-align: left; cursor: pointer; }
+#cm-menu-host #cm-about-submenu.stacked #cm-submenu-back { display: block; }
+#cm-menu-host .menu-hint { display: block; margin-top: 2px; color: var(--muted); font-size: .75rem; }
+#cm-menu-host .divider { height: 1px; margin: 6px 4px; background: var(--line); }
+#cm-menu-host .status {
+  position: fixed;
+  z-index: 20;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  font-size: .875rem;
+  line-height: 1.6;
+  text-align: center;
+  pointer-events: none;
+}
+#cm-menu-host .status:empty { padding: 0; border: 0; box-shadow: none; }
+@keyframes cm-menu-appear { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 360px) {
+  #cm-menu-host .menu-item { gap: 7px; padding-inline: 7px; }
+  #cm-menu-host .menu-footer { gap: 6px; }
+  #cm-menu-host .footer-brand { font-size: .7rem; }
+}
+@media (prefers-color-scheme: dark) {
+  #cm-menu-host {
+    color-scheme: dark;
+    --surface: #242528;
+    --ink: #f0f1f3;
+    --muted: #a0a3ac;
+    --line: #3a3c42;
+    --hover: #36383e;
+    --focus: #a6bdff;
+    --shadow: 0 16px 48px rgb(0 0 0 / 22%), 0 3px 10px rgb(0 0 0 / 12%);
+  }
+  #cm-menu-host .menu, #cm-menu-host .status { color-scheme: dark; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #cm-menu-host .menu { animation: none; }
+}
+@media (forced-colors: active) {
+  #cm-menu-host .menu, #cm-menu-host .status { border-color: CanvasText; }
+  #cm-menu-host .menu-item:focus, #cm-menu-host .menu-item:hover { outline: 2px solid Highlight; outline-offset: -2px; }
+  #cm-menu-host .divider { background: CanvasText; }
+  #cm-menu-host .section-divider:focus-visible, #cm-menu-host #cm-submenu-back:focus-visible { outline-color: Highlight; }
+}
+#cm-menu-host .tool-dialog { width: min(880px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); pointer-events: auto; color-scheme: light dark; }
+#cm-menu-host .tool-dialog::backdrop { background: rgb(0 0 0 / 35%); pointer-events: auto; }
+#cm-menu-host .dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px 0; }
+#cm-menu-host .dialog-header h2 { margin: 0; font-size: 1.125rem; font-weight: 700; }
+#cm-menu-host .dialog-close { padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+#cm-menu-host .dialog-close:focus-visible, #cm-menu-host .tool-code:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+#cm-menu-host .dialog-description { margin: 12px 20px 16px; color: var(--muted); font-size: .875rem; line-height: 1.6; }
+#cm-menu-host .code-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding: 0 20px 14px; }
+#cm-menu-host .code-toolbar button { padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--muted); font: inherit; font-size: .8125rem; cursor: pointer; }
+#cm-menu-host .code-toolbar button[aria-pressed="true"] { background: var(--hover); color: var(--ink); border-color: var(--focus); }
+#cm-menu-host .code-toolbar button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+#cm-menu-host #cm-code-view-note { font-size: .75rem; color: var(--muted); margin-left: auto; }
+#cm-menu-host .tool-code { margin: 0; border-top: 1px solid var(--line); max-height: 62dvh; overflow: auto; }
+#cm-menu-host .code-heading { margin: 0; padding: 10px 20px; background: var(--hover); font: 600 .75rem/1.5 system-ui, sans-serif; color: var(--muted); }
+#cm-menu-host .code-block { margin: 0; padding: 16px 20px 24px; font: .8125rem/1.65 ui-monospace, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; }
+#cm-menu-host .code-block code { font: inherit; }
+#cm-menu-host .syntax-comment { color: #626b79; }
+#cm-menu-host .syntax-tag, #cm-menu-host .syntax-function { color: #005cc5; }
+#cm-menu-host .syntax-attribute, #cm-menu-host .syntax-property { color: #7954a3; }
+#cm-menu-host .syntax-string { color: #18733b; }
+#cm-menu-host .syntax-keyword, #cm-menu-host .syntax-entity { color: #a5326e; }
+#cm-menu-host .syntax-number { color: #986400; }
+#cm-menu-host .syntax-punctuation { color: var(--muted); }
+@media (prefers-color-scheme: dark) {
+  #cm-menu-host .syntax-comment { color: #a6adbb; }
+  #cm-menu-host .syntax-tag, #cm-menu-host .syntax-function { color: #86bcff; }
+  #cm-menu-host .syntax-attribute, #cm-menu-host .syntax-property { color: #d3a5ff; }
+  #cm-menu-host .syntax-string { color: #9fd694; }
+  #cm-menu-host .syntax-keyword, #cm-menu-host .syntax-entity { color: #ff9bbb; }
+  #cm-menu-host .syntax-number { color: #e9c379; }
+}
+@media (forced-colors: active) {
+  #cm-menu-host .section-rule { background: CanvasText; }
+  #cm-menu-host .code-block [class^="syntax-"] { color: CanvasText; }
+  #cm-menu-host .code-toolbar button[aria-pressed="true"] { border-color: Highlight; }
+}
+@media print {
+  #cm-menu-host { display: none !important; }
+}
